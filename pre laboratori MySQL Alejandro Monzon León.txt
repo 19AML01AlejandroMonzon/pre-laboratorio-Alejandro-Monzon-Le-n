@@ -1,0 +1,55 @@
+CREATE DATABASE IF NOT EXISTS fixo_sistema_tres;
+USE fixo_sistema_tres;
+-- Tabla direccion
+CREATE TABLE direccion4 (
+    idDireccion INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Direccion VARCHAR(45),
+    Ciudad VARCHAR(45),
+    Pais VARCHAR(45)
+);
+
+-- Tabla cliente
+CREATE TABLE cliente4 (
+    idCliente INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(45),
+    Apellido VARCHAR(45),
+    Edad INT(11),
+    Direccion_idDireccion INT(11),
+    FOREIGN KEY (Direccion_idDireccion) REFERENCES direccion4(idDireccion)
+);
+
+-- Tabla categoria
+CREATE TABLE categoria4 (
+    idCategoria INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(45)
+);
+
+-- Tabla peliculas
+CREATE TABLE peliculas5 (
+    idPeliculas INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(45),
+    Duracion INT(11),
+    Descripcion TEXT,
+    Anio INT(11),
+    Categoria_idCategoria INT(11),
+    FOREIGN KEY (Categoria_idCategoria) REFERENCES categoria4(idCategoria)
+);
+
+-- Tabla inventario
+CREATE TABLE inventario4 (
+    idCopiaPeliculas INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Peliculas_idPeliculas INT(11),
+    Disponible TINYINT(1),
+    FOREIGN KEY (Peliculas_idPeliculas) REFERENCES peliculas5(idPeliculas)
+);
+
+-- Tabla renta
+CREATE TABLE renta4 (
+    idRenta INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Fecha_Renta DATE,
+    Fecha_Entrega DATE,
+    Inventario_idCopiaPeliculas INT(11),
+    Cliente_idCliente INT(11),
+    FOREIGN KEY (Inventario_idCopiaPeliculas) REFERENCES inventario4(idCopiaPeliculas),
+    FOREIGN KEY (Cliente_idCliente) REFERENCES cliente4(idCliente)
+);
